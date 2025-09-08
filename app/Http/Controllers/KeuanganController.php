@@ -78,6 +78,8 @@ class KeuanganController extends Controller
      */
     public function destroy(Keuangan $keuangan)
     {
-        //
+        $keuangan->delete();
+
+        return back()->with('success', 'Transaksi dihapus.');
     }
 }

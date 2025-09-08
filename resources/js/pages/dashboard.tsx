@@ -1,3 +1,5 @@
+import Modal from '@/components/modal';
+import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { Keuangan, PaginatedData, type BreadcrumbItem } from '@/types';
 import { formatPrice } from '@/utils';
@@ -22,7 +24,9 @@ export default function TransactionsPage({
     const { props } = usePage<{ keuangan: PaginatedData<Keuangan>; search?: string }>();
     const initialSearch = props.search || '';
     const [search, setSearch] = useState(initialSearch);
+    const [selectedTransaksi, setSelectedTransaksi] = useState<Keuangan | null>(null);
 
+    const [openDeleteModal, setOpenDeleteModal] = useState(false);
     // Debounce search
     useEffect(() => {
         if (search !== initialSearch) {
@@ -51,6 +55,21 @@ export default function TransactionsPage({
                 setData('jenis', 'Pemasukan');
                 setData('deskripsi', '');
                 setData('jumlah', '');
+            },
+        });
+    };
+
+    const handleDelete = () => {
+        if (!selectedTransaksi) return;
+
+        router.delete(`/keuangan/${selectedTransaksi.id}`, {
+            onSuccess: () => {
+                setOpenDeleteModal(false);
+                setSelectedTransaksi(null);
+            },
+            onError: (err) => {
+                console.error('Gagal hapus transaksi:', err);
+                alert('Gagal menghapus transaksi. Coba lagi.');
             },
         });
     };
@@ -190,7 +209,10 @@ export default function TransactionsPage({
                                     <td className="px-4 py-3 text-right text-gray-800 dark:text-gray-100">Rp {tx.jumlah.toLocaleString('id-ID')}</td>
                                     <td className="px-4 py-3 text-right">
                                         <button
-                                            onClick={() => alert('Delete belum dihubungkan ke backend')}
+                                            onClick={() => {
+                                                setSelectedTransaksi(tx);
+                                                setOpenDeleteModal(true);
+                                            }}
                                             className="text-red-400 hover:text-red-600 dark:hover:text-red-300"
                                         >
                                             <Trash2 size={18} />
@@ -225,6 +247,27 @@ export default function TransactionsPage({
                     </div>
                 </div>
             </div>
+
+            {/* Modal Konfirmasi Hapus */}
+            <Modal
+                isOpen={openDeleteModal}
+                onClose={() => setOpenDeleteModal(false)}
+                title="Konfirmasi Hapus"
+                size="sm"
+                footer={
+                    <div className="flex justify-end gap-2">
+                        <Button onClick={() => setOpenDeleteModal(false)} variant="secondary">
+                            Batal
+                        </Button>
+                        <Button onClick={handleDelete} className="bg-red-700 hover:bg-red-800">
+                            Hapus
+                        </Button>
+                    </div>
+                }
+            >
+                Apakah Anda yakin ingin menghapus catatan transaksi{' '}
+                <strong className="text-red-600 dark:text-red-400">{selectedTransaksi?.deskripsi}</strong>? Tindakan ini tidak dapat dibatalkan.
+            </Modal>
         </AppLayout>
     );
 }
