@@ -36,13 +36,13 @@ class KeuanganController extends Controller
     public function store(Request $request)
     {
         $validateData = $request->validate([
-            'tanggal' => 'required',
             'jenis' => 'required|in:Pemasukan,Pengeluaran',
             'jumlah' => 'required|numeric|min:1000',
             'deskripsi' => 'required|string|max:255',
         ]);
 
         $validateData['user_id'] = Auth::user()->id;
+        $validateData['tanggal'] = now();
 
         Keuangan::create($validateData);
 

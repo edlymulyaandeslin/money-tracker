@@ -41,7 +41,6 @@ export default function TransactionsPage({
     const [filterType, setFilterType] = useState('all');
 
     const { data, setData, processing, post, errors } = useForm({
-        tanggal: new Date().toISOString().split('T')[0],
         jenis: 'Pemasukan',
         deskripsi: '',
         jumlah: '',
