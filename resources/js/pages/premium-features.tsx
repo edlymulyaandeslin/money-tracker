@@ -20,7 +20,7 @@ export default function PremiumFeatures() {
 
     const handleUpgradeToPremium = async () => {
         const data = await axios.post(route('upgrade-premium'));
-        const snapToken = data.data;
+        const snapToken = data.data.snap_token;
 
         snap.pay(snapToken, {
             onSuccess: function (result) {

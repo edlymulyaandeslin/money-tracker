@@ -16,29 +16,35 @@ class PremiumFeatureController extends Controller
 
     public function midtrans()
     {
-        $user = Auth::user();
-        $params = [
-            'transaction_details' => [
-                'order_id' => 'ORD-' . rand(),
-                'gross_amount' => 50000,
-            ],
-            "item_details" => [
-                [
-                    "id" => "premium_feature",
-                    "price" => 50000,
-                    "quantity" => 1,
-                    "name" => "Fitur Premium Bulanan",
+        try {
+            $user = Auth::user();
+            $params = [
+                'transaction_details' => [
+                    'order_id' => 'ORD-' . rand(),
+                    'gross_amount' => 50000,
                 ],
-            ],
-            "customer_details" => [
-                "first_name" => $user->name,
-                "email" => $user->email,
-            ]
-        ];
+                "item_details" => [
+                    [
+                        "id" => "premium_feature",
+                        "price" => 50000,
+                        "quantity" => 1,
+                        "name" => "Fitur Premium Bulanan",
+                    ],
+                ],
+                "customer_details" => [
+                    "first_name" => $user->name,
+                    "email" => $user->email,
+                ]
+            ];
 
-        $snapToken = Snap::getSnapToken($params);
+            $snapToken = Snap::getSnapToken($params);
 
-        return $snapToken;
+            return response()->json(['snap_token' => $snapToken]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function webhook(Request $request)
