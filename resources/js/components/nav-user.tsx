@@ -19,6 +19,15 @@ export function NavUser() {
                     <DropdownMenuTrigger asChild>
                         <SidebarMenuButton size="lg" className="group text-sidebar-accent-foreground data-[state=open]:bg-sidebar-accent">
                             <UserInfo user={auth.user} />
+                            {Boolean(auth.user.is_premium) === true ? (
+                                <span className="inline-flex items-center rounded-full bg-gradient-to-r from-blue-400 to-blue-600 px-3 py-1 text-xs font-semibold text-white shadow-sm">
+                                    Premium
+                                </span>
+                            ) : (
+                                <span className="inline-flex items-center rounded-full bg-gray-200 px-3 py-1 text-xs font-semibold text-gray-700 shadow-sm dark:bg-gray-700 dark:text-gray-200">
+                                    Free
+                                </span>
+                            )}
                             <ChevronsUpDown className="ml-auto size-4" />
                         </SidebarMenuButton>
                     </DropdownMenuTrigger>

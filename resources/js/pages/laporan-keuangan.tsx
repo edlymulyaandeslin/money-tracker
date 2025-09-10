@@ -1,7 +1,8 @@
+import UpgradeToPremiumNotice from '@/components/upgrade-to-premium';
 import AppLayout from '@/layouts/app-layout';
-import { Keuangan, type BreadcrumbItem } from '@/types';
+import { Keuangan, SharedData, type BreadcrumbItem } from '@/types';
 import { formatBulan } from '@/utils';
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import { Printer, X } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
@@ -13,6 +14,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 export default function TransactionsPage({ transactions }: { transactions: Keuangan[] }) {
     const [selectedMonth, setSelectedMonth] = useState<any | null>(null);
     const [showModal, setShowModal] = useState(false);
+    const { auth } = usePage<SharedData>().props;
 
     // Grouping transaksi per bulan
     const summary = useMemo(() => {
@@ -44,83 +46,56 @@ export default function TransactionsPage({ transactions }: { transactions: Keuan
             .sort((a, b) => (a.bulan < b.bulan ? 1 : -1));
     }, [transactions]);
 
-    // const handlePrint = () => {
-    //     console.log(selectedMonth);
-    //     router.get(route('cetak-laporan', { periode: selectedMonth.bulan }));
-    // };
-
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Laporan Keuangan" />
-
-            {/* CSS khusus print */}
-            <style>{`
-                @media print {
-                    body * {
-                        visibility: hidden !important;
-                    }
-                    .print-area, .print-area * {
-                        visibility: visible !important;
-                    }
-                    .print-area {
-                        position: absolute;
-                        left: 0;
-                        top: 0;
-                        width: 100%;
-                        margin: 0;
-                        padding: 0;
-                        box-shadow: none !important;
-                        border: none !important;
-                        background: white !important;
-                    }
-                    .no-print {
-                        display: none !important;
-                    }
-                }
-            `}</style>
 
             <div className="px-6 py-4">
                 <div className="no-print space-y-6">
                     <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">Laporan Keuangan Bulanan</h2>
 
-                    <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white p-4 shadow dark:border-gray-600 dark:bg-gray-800">
-                        <table className="min-w-full text-sm text-gray-700 dark:text-gray-300">
-                            <thead className="bg-gray-100 text-gray-700 dark:bg-gray-700/60 dark:text-gray-200">
-                                <tr>
-                                    <th className="p-2 text-left">Bulan</th>
-                                    <th className="p-2 text-left">Pemasukan</th>
-                                    <th className="p-2 text-left">Pengeluaran</th>
-                                    <th className="p-2 text-left">Saldo</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {summary.map((item, i) => (
-                                    <tr
-                                        key={item.bulan}
-                                        className={`cursor-pointer ${
-                                            i % 2 === 0 ? 'bg-white dark:bg-gray-800' : 'bg-gray-50 dark:bg-gray-700/50'
-                                        } hover:bg-gray-100 dark:hover:bg-gray-600/70`}
-                                        onClick={() => {
-                                            setSelectedMonth(item);
-                                            setShowModal(true);
-                                        }}
-                                    >
-                                        <td className="p-2">{formatBulan(item.bulan)}</td>
-                                        <td className="p-2 text-green-600">Rp {item.pemasukan.toLocaleString('id-ID')}</td>
-                                        <td className="p-2 text-red-600">Rp {item.pengeluaran.toLocaleString('id-ID')}</td>
-                                        <td className="p-2 font-semibold">Rp {item.saldo.toLocaleString('id-ID')}</td>
-                                    </tr>
-                                ))}
-                                {summary.length === 0 && (
+                    {Boolean(auth.user.is_premium) !== true ? (
+                        <UpgradeToPremiumNotice />
+                    ) : (
+                        <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white p-4 shadow dark:border-gray-600 dark:bg-gray-800">
+                            <table className="min-w-full text-sm text-gray-700 dark:text-gray-300">
+                                <thead className="bg-gray-100 text-gray-700 dark:bg-gray-700/60 dark:text-gray-200">
                                     <tr>
-                                        <td colSpan={4} className="p-4 text-center text-gray-500 dark:text-gray-400">
-                                            Belum ada transaksi bulan ini
-                                        </td>
+                                        <th className="p-2 text-left">Bulan</th>
+                                        <th className="p-2 text-left">Pemasukan</th>
+                                        <th className="p-2 text-left">Pengeluaran</th>
+                                        <th className="p-2 text-left">Saldo</th>
                                     </tr>
-                                )}
-                            </tbody>
-                        </table>
-                    </div>
+                                </thead>
+                                <tbody>
+                                    {summary.map((item, i) => (
+                                        <tr
+                                            key={item.bulan}
+                                            className={`cursor-pointer ${
+                                                i % 2 === 0 ? 'bg-white dark:bg-gray-800' : 'bg-gray-50 dark:bg-gray-700/50'
+                                            } hover:bg-gray-100 dark:hover:bg-gray-600/70`}
+                                            onClick={() => {
+                                                setSelectedMonth(item);
+                                                setShowModal(true);
+                                            }}
+                                        >
+                                            <td className="p-2">{formatBulan(item.bulan)}</td>
+                                            <td className="p-2 text-green-600">Rp {item.pemasukan.toLocaleString('id-ID')}</td>
+                                            <td className="p-2 text-red-600">Rp {item.pengeluaran.toLocaleString('id-ID')}</td>
+                                            <td className="p-2 font-semibold">Rp {item.saldo.toLocaleString('id-ID')}</td>
+                                        </tr>
+                                    ))}
+                                    {summary.length === 0 && (
+                                        <tr>
+                                            <td colSpan={4} className="p-4 text-center text-gray-500 dark:text-gray-400">
+                                                Belum ada transaksi bulan ini
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
                 </div>
             </div>
 

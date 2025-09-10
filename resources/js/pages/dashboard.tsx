@@ -86,7 +86,7 @@ export default function TransactionsPage({
 
             <div className="flex h-full flex-1 flex-col gap-6 overflow-x-auto rounded-xl bg-gray-50 p-6 dark:bg-gray-900">
                 {/* Judul */}
-                <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">Pemasukan & Pengeluaran</h2>
+                <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">Pemasukan & Pengeluaran Bulan Ini</h2>
 
                 {/* Ringkasan */}
                 <div className="grid gap-4 md:grid-cols-3">

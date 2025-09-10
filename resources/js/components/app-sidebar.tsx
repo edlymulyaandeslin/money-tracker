@@ -4,7 +4,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { Landmark, LayoutGrid } from 'lucide-react';
+import { Landmark, LayoutGrid, MousePointerClick } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: { label: string; items: NavItem[] }[] = [
@@ -20,6 +20,16 @@ const mainNavItems: { label: string; items: NavItem[] }[] = [
                 title: 'Laporan Keuangan',
                 href: '/keuangan',
                 icon: Landmark,
+            },
+        ],
+    },
+    {
+        label: 'Premium Features',
+        items: [
+            {
+                title: 'Upgrade',
+                href: '/premium',
+                icon: MousePointerClick,
             },
         ],
     },
@@ -40,7 +50,7 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href="/dashboard" prefetch>
+                            <Link href="/" prefetch>
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>
