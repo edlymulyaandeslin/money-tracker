@@ -16,7 +16,7 @@ export default function UpgradeToPremiumNotice() {
                 className="rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-3 text-lg font-semibold text-white shadow-md transition-all duration-300 hover:scale-105 hover:from-blue-700 hover:to-indigo-700"
                 href={'/premium'}
             >
-                Upgrade Sekarang 🚀
+                Upgrade Sekarang ✨
             </Link>
         </div>
     );

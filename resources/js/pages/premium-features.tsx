@@ -44,7 +44,11 @@ export default function PremiumFeatures() {
                 {Boolean(auth.user?.is_premium) === true ? (
                     <div className="mx-auto max-w-3xl text-center">
                         <Unlock className="mx-auto mb-6 h-16 w-16 text-blue-600 dark:text-blue-400" />
-                        <h1 className="mb-4 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Akun Premium Aktif</h1>
+                        <h1 className="mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            Akun Premium <span className="text-blue-600 dark:text-blue-400">Aktif</span>
+                        </h1>
+
+                        <p className="mb-4 font-semibold text-gray-600 dark:text-gray-400">Berlaku: Lifetime access</p>
 
                         {/* Daftar Fitur */}
                         <div className="rounded-2xl border border-gray-200 bg-gradient-to-b from-white to-gray-50 p-8 shadow-lg transition-transform hover:-translate-y-1 hover:shadow-xl dark:border-gray-700 dark:from-gray-800 dark:to-gray-900">
@@ -67,7 +71,7 @@ export default function PremiumFeatures() {
                         <h1 className="mb-3 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Upgrade ke Premium</h1>
                         <p className="mb-4 text-lg text-gray-600 dark:text-gray-300">
                             Nikmati laporan detail, grafik keuangan, dan fitur eksklusif lainnya hanya{' '}
-                            <span className="text-base font-semibold text-blue-600 dark:text-blue-400">Rp 50.000 / bulan</span>
+                            <span className="text-base font-semibold text-blue-600 dark:text-blue-400">Rp 50.000</span>
                         </p>
                     </div>
                 )}
@@ -95,17 +99,14 @@ export default function PremiumFeatures() {
                                 Best Value
                             </span>
                             <h2 className="mb-2 text-2xl font-bold text-gray-800 dark:text-white">Premium Plan</h2>
-                            <p className="mb-8 text-5xl font-extrabold text-blue-600 dark:text-blue-400">
-                                Rp 50K
-                                <span className="ml-1 text-xl font-medium text-gray-600 dark:text-gray-300">/bulan</span>
-                            </p>
+                            <p className="mb-8 text-5xl font-extrabold text-blue-600 dark:text-blue-400">Rp 50K</p>
                             <Button
                                 className="cursor-pointer rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-10 py-4 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-blue-500/40 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800"
                                 onClick={handleUpgradeToPremium}
                             >
-                                Upgrade Sekarang 🚀
+                                Upgrade Sekarang ✨
                             </Button>
-                            <p className="mt-5 text-sm text-gray-500 dark:text-gray-400">Batalkan kapan saja, tanpa komitmen</p>
+                            <p className="mt-5 text-sm text-gray-500 dark:text-gray-400">Berlangganan sekali akses selamanya!</p>
                         </div>
                     </div>
                 )}

@@ -16,6 +16,7 @@ class PremiumFeatureController extends Controller
 
     public function midtrans()
     {
+        $user = Auth::user();
         $params = [
             'transaction_details' => [
                 'order_id' => 'ORD-' . rand(),
@@ -28,6 +29,10 @@ class PremiumFeatureController extends Controller
                     "quantity" => 1,
                     "name" => "Fitur Premium Bulanan",
                 ],
+            ],
+            "customer_details" => [
+                "first_name" => $user->name,
+                "email" => $user->email,
             ]
         ];
 

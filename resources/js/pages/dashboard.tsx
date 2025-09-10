@@ -5,7 +5,7 @@ import { Keuangan, PaginatedData, type BreadcrumbItem } from '@/types';
 import { formatPrice } from '@/utils';
 import { Head, Link, router, useForm, usePage } from '@inertiajs/react';
 import { Search, Trash2 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Dashboard', href: '/dashboard' },
@@ -28,15 +28,15 @@ export default function TransactionsPage({
 
     const [openDeleteModal, setOpenDeleteModal] = useState(false);
     // Debounce search
-    useEffect(() => {
-        if (search !== initialSearch) {
-            const delayDebounce = setTimeout(() => {
-                router.get('/dashboard', { search }, { preserveState: true, replace: true });
-            }, 400);
+    // useEffect(() => {
+    //     if (search !== initialSearch) {
+    //         const delayDebounce = setTimeout(() => {
+    //             router.get('/dashboard', { search }, { preserveState: true, replace: true });
+    //         }, 400);
 
-            return () => clearTimeout(delayDebounce);
-        }
-    }, [search, initialSearch]);
+    //         return () => clearTimeout(delayDebounce);
+    //     }
+    // }, [search, initialSearch]);
 
     const [filterType, setFilterType] = useState('all');
 

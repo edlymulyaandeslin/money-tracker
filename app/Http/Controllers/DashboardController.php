@@ -16,20 +16,20 @@ class DashboardController extends Controller
         $tahun = Carbon::now()->year;
         $user = Auth::user();
 
-        $transactions = Keuangan::whereMonth('tanggal', $bulan)
-            ->where('user_id', $user->id)
+        $transactions = Keuangan::where('user_id', $user->id)
+            ->whereMonth('tanggal', $bulan)
             ->whereYear('tanggal', $tahun)
             ->latest()
             ->paginate(5);
 
-        $totalPemasukan = Keuangan::where('jenis', 'Pemasukan')
-            ->where('user_id', $user->id)
+        $totalPemasukan = Keuangan::where('user_id', $user->id)
+            ->where('jenis', 'Pemasukan')
             ->whereMonth('tanggal', $bulan)
             ->whereYear('tanggal', $tahun)
             ->sum('jumlah');
 
-        $totalPengeluaran = Keuangan::where('jenis', 'Pengeluaran')
-            ->where('user_id', $user->id)
+        $totalPengeluaran = Keuangan::where('user_id', $user->id)
+            ->where('jenis', 'Pengeluaran')
             ->whereMonth('tanggal', $bulan)
             ->whereYear('tanggal', $tahun)
             ->sum('jumlah');
