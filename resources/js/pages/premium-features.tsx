@@ -1,7 +1,8 @@
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem, SharedData } from '@/types';
-import { Head, usePage } from '@inertiajs/react';
+import { Head, router, usePage } from '@inertiajs/react';
+import axios from 'axios';
 import { CheckCircle, Lock, Unlock } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [{ title: 'Fitur Premium', href: '#' }];
@@ -16,6 +17,24 @@ export default function PremiumFeatures() {
         'Prioritas support',
         'Update fitur terbaru lebih awal',
     ];
+
+    const handleUpgradeToPremium = async () => {
+        const data = await axios.post(route('upgrade-premium'));
+        const snapToken = data.data;
+
+        snap.pay(snapToken, {
+            onSuccess: function (result) {
+                router.post(route('webhook'), result);
+            },
+            onPending: function () {},
+            onError: function (result) {
+                router.post(route('webhook'), result);
+            },
+            onClose: function () {
+                console.log('customer closed the popup without finishing the payment');
+            },
+        });
+    };
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -82,9 +101,7 @@ export default function PremiumFeatures() {
                             </p>
                             <Button
                                 className="cursor-pointer rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-10 py-4 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-blue-500/40 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800"
-                                onClick={() => {
-                                    window.location.href = '/upgrade';
-                                }}
+                                onClick={handleUpgradeToPremium}
                             >
                                 Upgrade Sekarang 🚀
                             </Button>

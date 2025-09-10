@@ -19,6 +19,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('cetak-laporan/{periode}', [LaporanController::class, 'index'])->name('cetak-laporan');
 
     Route::get('premium', [PremiumFeatureController::class, 'index'])->name('premium');
+    Route::post('premium', [PremiumFeatureController::class, 'midtrans'])->name('upgrade-premium');
+    Route::post('webhook', [PremiumFeatureController::class, 'webhook'])->name('webhook');
 });
 
 require __DIR__ . '/settings.php';
