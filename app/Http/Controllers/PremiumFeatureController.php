@@ -28,7 +28,7 @@ class PremiumFeatureController extends Controller
                         "id" => "premium_feature",
                         "price" => 50000,
                         "quantity" => 1,
-                        "name" => "Fitur Premium Bulanan",
+                        "name" => "Fitur Premium Lifetime Access",
                     ],
                 ],
                 "customer_details" => [
