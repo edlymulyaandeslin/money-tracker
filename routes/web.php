@@ -22,7 +22,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('premium', [PremiumFeatureController::class, 'index'])->name('premium');
     Route::post('premium', [PremiumFeatureController::class, 'midtrans'])->name('upgrade-premium');
     Route::post('webhook', [PremiumFeatureController::class, 'webhook'])->name('webhook');
+});
 
+Route::middleware(['is_super'])->group(function () {
     Route::resource('users', UserController::class);
 });
 
