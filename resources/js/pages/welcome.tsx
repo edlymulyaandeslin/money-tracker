@@ -87,7 +87,11 @@ export default function Home() {
 
                 {/* Footer */}
                 <footer className="border-t border-gray-200 px-6 py-6 text-center text-sm text-gray-500 dark:border-gray-700 dark:text-gray-400">
-                    © {new Date().getFullYear()} Money Tracker. All rights reserved.
+                    © {new Date().getFullYear()}{' '}
+                    <a href="https://www.linkedin.com/in/edly-mulya-andeslin/" className="font-bold text-green-600">
+                        Lyn
+                    </a>{' '}
+                    <strong>Money Tracker</strong>. All rights reserved.
                 </footer>
             </div>
         </>
