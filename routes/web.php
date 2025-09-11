@@ -6,6 +6,7 @@ use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\KeuanganController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PremiumFeatureController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return Inertia::render('welcome');
@@ -21,6 +22,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('premium', [PremiumFeatureController::class, 'index'])->name('premium');
     Route::post('premium', [PremiumFeatureController::class, 'midtrans'])->name('upgrade-premium');
     Route::post('webhook', [PremiumFeatureController::class, 'webhook'])->name('webhook');
+
+    Route::resource('users', UserController::class);
 });
 
 require __DIR__ . '/settings.php';

@@ -35,6 +35,7 @@ export interface User {
     id: number;
     name: string;
     email: string;
+    role: string;
     is_premium: boolean;
     avatar?: string;
     email_verified_at: string | null;
